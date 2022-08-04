@@ -14,7 +14,7 @@ function App() {
         <Route path="/hotel/:id" element={<Hotel />} />
         <Route path="/hotels" element={<Hotels />} />
       </Routes>
-  </BrowserRouter>
+    </BrowserRouter>
 
   );
 }
