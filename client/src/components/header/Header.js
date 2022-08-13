@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {DateRange} from 'react-date-range';
 import {format} from 'date-fns';
+import { useNavigate } from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBed, faCalendarDays, faCar, faPerson, faPlane, 
         faTaxi} from '@fortawesome/free-solid-svg-icons'
@@ -38,12 +39,23 @@ const Header = ({type}) => {
     });
   };
 
+  // State hook for destination bar and search button
+  const navigate = useNavigate();
+  const [destination, setDestination] = useState("");
+
+  const handleSearch = () => {
+    navigate("/hotels", { state: { destination, date, option } });
+  }
+
   return (
     <div className="header">
+
+      {/* Differentiate header styling for hotels page */}
       <div className={type === "hotels-list" ? "headerContainer listMode" : "headerContainer"}>
 
         {/* Header list items start here */}
         <div className="headerList">
+
           <div className="headerListItem active">
             <FontAwesomeIcon icon={faBed} />
             <span>Stays</span>
@@ -70,7 +82,7 @@ const Header = ({type}) => {
           </div>
         </div>
 
-        {/* Header title, description and buttons */}
+        {/* Header title and description. Sort header for hotels page */}
         { type !== "hotels-list" &&
           <>
             <h1 className="headerTitle">A lifetime of discounts? It's Awesome.</h1>
@@ -80,7 +92,7 @@ const Header = ({type}) => {
             </p>
             <button className="headerBtn">Sign in / Register</button>
 
-            {/* Search bar on left side of header container */}
+            {/* Destination search bar on left side of header container */}
             <div className="headerSearch"> 
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />
@@ -88,6 +100,7 @@ const Header = ({type}) => {
                   type="text"
                   className="headerSearchInput"
                   placeholder="Where do you like to stay?"
+                  onChange={e => setDestination(e.target.value)}
                 />
               </div>
 
@@ -167,7 +180,9 @@ const Header = ({type}) => {
               
               {/* Search button */}
               <div className="headerSearchItem">
-                <button className="headerBtn">Search</button>
+                <button className="headerBtn" onClick={handleSearch}>
+                  Search
+                </button>
               </div>
             </div>
           </>

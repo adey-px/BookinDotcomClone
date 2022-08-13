@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 import "./navbar.css"
 
@@ -9,7 +10,7 @@ const Navbar = () => {
       <div className="navContainer">
 
         <span className="logo">
-          FlywiseBooking.Com 
+          <Link to="/">FlywiseBooking.Com</Link>
         </span>
 
         <div className="navItems">
