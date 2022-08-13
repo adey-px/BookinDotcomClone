@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import mongoose from "mongoose"
 
 
+// Load environment variables
 dotenv.config()
 
 // Handle initial connection to db and detect error
