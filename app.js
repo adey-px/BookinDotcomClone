@@ -2,10 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-import authRoute from "./routes/auth.js";
-import hotelRoute from "./routes/hotel.js";
-import roomRoute from "./routes/room.js";
-import userRoute from "./routes/user.js";
+import authRoute from "./routes/authRoute.js";
+import hotelRoute from "./routes/hotelRoute.js";
+import roomRoute from "./routes/roomRoute.js";
+import userRoute from "./routes/userRoute.js";
 
 
 // Initialize an instance of express app
@@ -14,10 +14,10 @@ const app = express()
 // Load environment variables from dotenv
 dotenv.config();
 
-// Verify initial connection to db to detect error
+// Check connection to mongodb to detect error
 const connect = async () => {
     try {
-        await mongoose.connect(process.env.MONGO);
+        mongoose.connect(process.env.MONGO);
         console.log("App connected to mongodb...")
 
       } catch (error) {
@@ -32,13 +32,13 @@ mongoose.connection.on("disconnected", () => {
 // API for tesing paths with json in insomnia
 app.use(express.json())
 
-// Middlewares for paths defined in route files
+// Middleware prefixes for paths in route files
 app.use("/auth", authRoute);
 app.use("/hotel", hotelRoute);
 app.use("/room", roomRoute);
 app.use("/user", userRoute);
 
-// Middlewares for custom error handling
+// Middleware for custom error handling
 app.use((err, req, res, next) => {
 
   const errorStatus = err.status || 500;
