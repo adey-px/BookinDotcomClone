@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 import authRoute from "./routes/authRoute.js";
 import hotelRoute from "./routes/hotelRoute.js";
@@ -38,11 +39,14 @@ app.use("/hotel", hotelRoute);
 app.use("/room", roomRoute);
 app.use("/user", userRoute);
 
+// Middleware for cookie in user login token
+app.use(cookieParser())
+
 // Middleware for custom error handling
 app.use((err, req, res, next) => {
 
   const errorStatus = err.status || 500;
-  const errorMessage = err.message || "Oops!, error detected!";
+  const errorMessage = err.message || "Error detected!";
 
   return res.status(errorStatus).json({
     success: false,
@@ -52,7 +56,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-//
+
 // Connect app to node server with call to db
 app.listen(5000, () => {
     connect()

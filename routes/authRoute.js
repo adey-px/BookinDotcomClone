@@ -1,11 +1,22 @@
-import express from "express"
+import express from "express";
+import { register, login } from "../views/authView.js";
 
 
 const router = express.Router();
 
-// Paths for middleware in app
-router.get("/register", (req, res) => {
-    res.send("Auths endpoint here")
-})
+// Path for new user registration
+router.post("/register", register)
+
+// Path for user login
+router.post("/login", login)
+
+
+
+
+
+
+
+
+
 
 export default router

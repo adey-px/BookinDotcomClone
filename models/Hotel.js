@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
+// Model for creating new hotel
 const HotelSchema = new Schema(
   {
   name: {

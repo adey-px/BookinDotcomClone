@@ -1,5 +1,7 @@
 import express from "express";
 
+import { verifyAdmin } from "../utils/verifyToken.js";
+
 import { allHotels, createHotel, deleteHotel, 
         getHotel, updateHotel } from "../views/hotelView.js";
 
@@ -7,7 +9,7 @@ import { allHotels, createHotel, deleteHotel,
 const router = express.Router();
 
 // Path for creating new hotel
-router.post("/create-hotel", createHotel);
+router.post("/create-hotel", verifyAdmin, createHotel);
 
 // Path for reading or getting hotel
 router.get("/get-hotel/:id", getHotel);
@@ -16,10 +18,10 @@ router.get("/get-hotel/:id", getHotel);
 router.get("/all-hotels", allHotels);
 
 // Path for updating or editing hotel
-router.put("/edit-hotel/:id", updateHotel)
+router.put("/edit-hotel/:id", verifyAdmin, updateHotel)
 
 // Path for deleting hotel
-router.delete("/delete/:id", deleteHotel)
+router.delete("/delete/:id", verifyAdmin, deleteHotel)
 
 
 export default router
