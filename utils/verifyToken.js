@@ -3,24 +3,30 @@ import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 
 
-// Verify all authentication
+// Check access_token from cookies set in user login
 export const verifyToken = (req, res, next) => {
 
-  const token = req.cookies.access_token;
+  // Bring user token set in cookie from login
+  const loginToken = req.cookies.access_token;
 
-  if (!token) {
+  // If user token is not found from login
+  if (!loginToken) {
     return next(createError(401, "You are not authenticated!"));
   }
 
-  jwt.verify(token, process.env.JWT, (err, user) => {
-    if (err) 
-        return next(createError(403, "Token is not valid!"));
+  // if (loginToken) - verify it and load the hidden user details
+  jwt.verify(loginToken, process.env.JWT, (err, userInfo) => {
 
-    req.user = user;
+    if (err) 
+      return next(createError(403, "Your token is not valid!"));
+
+    // if (no err) on the token
+    req.user = userInfo;
 
     next();
   });
 };
+
 
 // Verify user authentication
 export const verifyUser = (req, res, next) => {
@@ -34,6 +40,7 @@ export const verifyUser = (req, res, next) => {
     }
   });
 };
+
 
 // Verify admin authentication
 export const verifyAdmin = (req, res, next) => {

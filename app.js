@@ -39,7 +39,7 @@ app.use("/hotel", hotelRoute);
 app.use("/room", roomRoute);
 app.use("/user", userRoute);
 
-// Middleware for cookie in user login token
+// Middleware to set token for user when login
 app.use(cookieParser())
 
 // Middleware for custom error handling

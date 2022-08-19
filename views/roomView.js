@@ -2,7 +2,7 @@ import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
 
 
-// Logic for creating new room in hotel
+// Create new room in hotel
 export const createRoom = async (req, res, next) => {
 
   const hotelId = req.params.hotelid;
@@ -27,8 +27,34 @@ export const createRoom = async (req, res, next) => {
 };
 
 
-// Logic for updating existing room in hotel
-export const editRoom = async (req, res, next) => {
+// Read or get room in hotel
+export const getRoom = async (req, res, next) => {
+
+  try {
+    const room = await Room.findById(req.params.id);
+    res.status(200).json(room);
+  
+  } catch (err) {
+    next(err);
+  }
+};
+  
+
+// Read or get ALL rooms in hotel
+export const allRooms = async (req, res, next) => {
+  
+  try {
+    const rooms = await Room.find();
+    res.status(200).json(rooms);
+  
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+// Update room in hotel
+export const updateRoom = async (req, res, next) => {
     
   try {
     const updatedRoom = await Room.findByIdAndUpdate(
@@ -46,7 +72,7 @@ export const editRoom = async (req, res, next) => {
 };
 
 
-// Logic for updating room status in hotel
+// Update room status in hotel
 export const roomStatus = async (req, res, next) => {
 
   try {
@@ -66,33 +92,7 @@ export const roomStatus = async (req, res, next) => {
 };
 
 
-// Logic for reading or getting room in hotel
-export const getRoom = async (req, res, next) => {
-
-    try {
-      const room = await Room.findById(req.params.id);
-      res.status(200).json(room);
-  
-    } catch (err) {
-      next(err);
-    }
-  };
-  
-
-  // Logic for reading or getting ALL rooms in hotel
-  export const allRooms = async (req, res, next) => {
-  
-    try {
-      const rooms = await Room.find();
-      res.status(200).json(rooms);
-  
-    } catch (err) {
-      next(err);
-    }
-  };
-
-
-// Logic for deleting room in hotel
+// Delete room in hotel
 export const deleteRoom = async (req, res, next) => {
 
   const hotelId = req.params.hotelid;

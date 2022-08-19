@@ -8,19 +8,19 @@ import { allHotels, createHotel, deleteHotel,
 
 const router = express.Router();
 
-// Path for creating new hotel
-router.post("/create-hotel", verifyAdmin, createHotel);
+// Create new hotel
+router.post("/create-hotel", verifyAdmin, createHotel)
 
-// Path for reading or getting hotel
-router.get("/get-hotel/:id", getHotel);
+// Read or get hotel
+router.get("/get-hotel/:id", getHotel)
 
-//  Path reading or getting all hotels
-router.get("/all-hotels", allHotels);
+// Read or get ALL hotels
+router.get("/all-hotels", allHotels)
 
-// Path for updating or editing hotel
-router.put("/edit-hotel/:id", verifyAdmin, updateHotel)
+// Update hotel
+router.put("/update-hotel/:id", verifyAdmin, updateHotel)
 
-// Path for deleting hotel
+// Delete hotel
 router.delete("/delete/:id", verifyAdmin, deleteHotel)
 
 

@@ -4,19 +4,11 @@ import { register, login } from "../views/authView.js";
 
 const router = express.Router();
 
-// Path for new user registration
+// Register new user
 router.post("/register", register)
 
-// Path for user login
+// User login
 router.post("/login", login)
-
-
-
-
-
-
-
-
 
 
 export default router

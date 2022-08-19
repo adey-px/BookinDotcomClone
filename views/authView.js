@@ -15,6 +15,9 @@ export const register = async (req, res, next) => {
             username: req.body.username,
             email: req.body.email,
             password: hash,
+            country: req.body.country,
+            city: req.body.city,
+            phone: req.body.phone
         })
 
         await user.save()
@@ -25,29 +28,31 @@ export const register = async (req, res, next) => {
     }
 }
 
-// Login existing user account
+
+// Login user account
 export const login = async (req, res, next) => {
     try {
-        const userN = await User.findOne({username: req.body.username})
-        const passW = await bcrypt.compare(req.body.password, userN.password)
+        const authUser = await User.findOne({username: req.body.username})
+        const authPass = await bcrypt.compare(req.body.password, authUser.password)
 
-        if (!userN)
+        if (!authUser)
             return next(createError(404, "Sorry! this user is not found"))
 
-        if (!passW)
-            return next(createError(400, "Wrong username and/or password"))
+        if (!authPass)
+            return next(createError(400, "Check your password and try again"))
 
-        const token = jwt.sign(
-            {id: userN._id, isAdmin: userN.isAdmin},
-                process.env.JWT
-            );
-          
-        const { password, isAdmin, ...otherDetails } = userN._doc;
-            res
-            .cookie("access_token", token, {httpOnly: true,})
-            .status(200)
-            .json({ details: { ...otherDetails }, isAdmin });
+        // Prevent user password etc from being sent over http when login
+        const {password, isAdmin, ...otherDetails} = authUser._doc;
 
+        // To verify identity, hide selected user details in jwt, sent into cookie
+        const userToken = jwt.sign({id: authUser._id, 
+                                isAdmin: authUser.isAdmin}, process.env.JWT);
+        
+        // Set cookie for checking user role and permission
+        res.cookie("access_token", userToken, {httpOnly: true})
+           .status(200)
+           .json({...otherDetails})
+        
     } catch (err) {
         next(err)
     }

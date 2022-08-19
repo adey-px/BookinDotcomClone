@@ -1,28 +1,28 @@
 import express from "express";
 
 import {createRoom, deleteRoom, getRoom, allRooms,
-        editRoom, roomStatus} from "../views/roomView.js";
+        updateRoom, roomStatus} from "../views/roomView.js";
 
 import { verifyAdmin } from "../utils/verifyToken.js";
 
 
 const router = express.Router();
 
-// Path for creating new room
-router.post("/:hotelid", verifyAdmin, createRoom);
+// Create new room
+router.post("/:hotelid", verifyAdmin, createRoom)
 
-// Path for reading or getting room
-router.get("/:id", getRoom);
+// Read or get room
+router.get("/:id", getRoom)
 
-// Path for reading or getting ALL rooms
-router.get("/", allRooms);
+// Read or get ALL rooms
+router.get("/", allRooms)
 
-// Path for updating room and room status
-router.put("/:id", verifyAdmin, editRoom);
-router.put("/status/:id", roomStatus);
+// Update room and room status
+router.put("/status/:id", roomStatus)
+router.put("/:id", verifyAdmin, updateRoom)
 
-//Path for deleting room
-router.delete("/:id/:hotelid", verifyAdmin, deleteRoom);
+// Delete room
+router.delete("/:id/:hotelid", verifyAdmin, deleteRoom)
 
 
 export default router;

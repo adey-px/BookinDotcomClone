@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-// Model for creating new hotel
+// Hotel model
 const HotelSchema = new Schema(
   {
   name: {
@@ -15,13 +15,13 @@ const HotelSchema = new Schema(
     type: String,
     required: true,
   },
-
-  city: {
+  
+  address: {
     type: String,
     required: true,
   },
 
-  address: {
+  city: {
     type: String,
     required: true,
   },
