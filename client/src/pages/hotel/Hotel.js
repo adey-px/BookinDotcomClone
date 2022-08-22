@@ -5,7 +5,7 @@ import {faCircleArrowLeft, faCircleArrowRight, faCircleXmark,
 
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import MailList from "../../components/mailList/mailList";
+import MailingList from "../../components/mailing/MailingList";
 import Footer from "../../components/footer/Footer";
 import "./hotel.css";
 
@@ -159,7 +159,7 @@ const Hotel = () => {
           </div>
         </div>
 
-        <MailList />
+        <MailingList />
         <Footer />
 
       </div>

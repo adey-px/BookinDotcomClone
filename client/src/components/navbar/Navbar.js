@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="navContainer">
 
         <span className="logo">
-          <Link to="/">FlywiseBooking.Com</Link>
+          <Link to="/">FlywiseBooking</Link>
         </span>
 
         <div className="navItems">
@@ -28,4 +28,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar;

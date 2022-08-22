@@ -18,17 +18,19 @@ dotenv.config();
 // Check connection to mongodb to detect error
 const connect = async () => {
     try {
-        mongoose.connect(process.env.MONGO);
+        await mongoose.connect(process.env.MONGO);
         console.log("App connected to mongodb...")
 
       } catch (error) {
         throw error;
       }
 };
-
 mongoose.connection.on("disconnected", () => {
     console.log("App disconnected from mongodb (:")
 });
+
+// Middleware to set token for user when login
+app.use(cookieParser())
 
 // API for tesing paths with json in insomnia
 app.use(express.json())
@@ -38,9 +40,6 @@ app.use("/auth", authRoute);
 app.use("/hotel", hotelRoute);
 app.use("/room", roomRoute);
 app.use("/user", userRoute);
-
-// Middleware to set token for user when login
-app.use(cookieParser())
 
 // Middleware for custom error handling
 app.use((err, req, res, next) => {

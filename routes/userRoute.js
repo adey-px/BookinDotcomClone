@@ -21,17 +21,17 @@ router.put("/:id", verifyUser, updateUser)
 // Delete user
 router.delete("/:id", verifyUser, deleteUser)
 
-// Check user auth
-router.get("/check-user", verifyToken, (req, res, next) => {
+// Test Check user auth 
+router.get("/test/check-user", verifyToken, (req, res, next) => {
   res.send("Hello user, you are logged in")
 })
 
-// Check user update auth
+// Test Check user update auth
 router.get("/check-user/:id", verifyUser, (req, res, next) => {
   res.send("Hi, You are logged in and you can delete your account")
 })
 
-// Check admin auth
+// Test Check admin auth
 router.get("/check-admin/:id", verifyAdmin, (req, res, next) => {
   res.send("H admin, you are logged in and you can delete ALL users")
 })

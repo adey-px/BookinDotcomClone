@@ -15,8 +15,9 @@
   }
   
   .logo a{
-    color: orange;
+    color: #ffff;
     font-weight: 900;
+    font-size: 25px;
     text-decoration: none;
   }
   

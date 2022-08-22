@@ -1,7 +1,7 @@
-import "./mailList.css"
+import "./mailingList.css"
 
 
-const MailList = () => {
+const MailingList = () => {
   return (
     <div className="mail">
 
@@ -17,4 +17,4 @@ const MailList = () => {
   )
 }
 
-export default MailList
+export default MailingList;

@@ -68,7 +68,7 @@ const Header = ({type}) => {
 
           <div className="headerListItem">
             <FontAwesomeIcon icon={faCar} />
-            <span>Car rentals</span>
+            <span>Car Rentals</span>
           </div>
 
           <div className="headerListItem">
@@ -78,7 +78,7 @@ const Header = ({type}) => {
 
           <div className="headerListItem">
             <FontAwesomeIcon icon={faTaxi} />
-            <span>Airport taxis</span>
+            <span>Airport Taxis</span>
           </div>
         </div>
 
@@ -193,4 +193,4 @@ const Header = ({type}) => {
   );
 }
 
-export default Header
+export default Header;

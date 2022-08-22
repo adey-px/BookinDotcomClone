@@ -4,10 +4,8 @@ import Room from "../models/Room.js";
 
 // Create new room in hotel
 export const createRoom = async (req, res, next) => {
-
   const hotelId = req.params.hotelid;
   const room = new Room(req.body);
-
   try {
     const newRoom = await room.save();
 
@@ -29,7 +27,6 @@ export const createRoom = async (req, res, next) => {
 
 // Read or get room in hotel
 export const getRoom = async (req, res, next) => {
-
   try {
     const room = await Room.findById(req.params.id);
     res.status(200).json(room);
@@ -42,7 +39,6 @@ export const getRoom = async (req, res, next) => {
 
 // Read or get ALL rooms in hotel
 export const allRooms = async (req, res, next) => {
-  
   try {
     const rooms = await Room.find();
     res.status(200).json(rooms);
@@ -55,7 +51,6 @@ export const allRooms = async (req, res, next) => {
 
 // Update room in hotel
 export const updateRoom = async (req, res, next) => {
-    
   try {
     const updatedRoom = await Room.findByIdAndUpdate(
       req.params.id,
@@ -74,7 +69,6 @@ export const updateRoom = async (req, res, next) => {
 
 // Update room status in hotel
 export const roomStatus = async (req, res, next) => {
-
   try {
     await Room.updateOne(
       { "roomNumber._id": req.params.id },
@@ -94,9 +88,7 @@ export const roomStatus = async (req, res, next) => {
 
 // Delete room in hotel
 export const deleteRoom = async (req, res, next) => {
-
   const hotelId = req.params.hotelid;
-
   try {
     await Room.findByIdAndDelete(req.params.id);
 

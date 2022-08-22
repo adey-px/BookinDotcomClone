@@ -2,7 +2,7 @@ import express from "express";
 
 import { verifyAdmin } from "../utils/verifyToken.js";
 
-import { allHotels, createHotel, deleteHotel, 
+import { allHotels, countByCity, countByType, createHotel, deleteHotel, 
         getHotel, updateHotel } from "../views/hotelView.js";
 
 
@@ -16,6 +16,8 @@ router.get("/get-hotel/:id", getHotel)
 
 // Read or get ALL hotels
 router.get("/all-hotels", allHotels)
+router.get("/count-by-city", countByCity)
+router.get("/count-by-type", countByType)
 
 // Update hotel
 router.put("/update-hotel/:id", verifyAdmin, updateHotel)

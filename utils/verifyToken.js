@@ -7,7 +7,7 @@ import { createError } from "../utils/error.js";
 export const verifyToken = (req, res, next) => {
 
   // Bring user token set in cookie from login
-  const loginToken = req.cookies.access_token;
+  const loginToken = req.cookies.access_token
 
   // If user token is not found from login
   if (!loginToken) {

@@ -5,11 +5,11 @@ import { DateRange } from "react-date-range";
 
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import SearchItem from "../../components/searchItem/searchItem";
-import "./hotels.css";
+import SearchItem from "../../components/search/SearchItem";
+import "./hotelsList.css";
 
 
-const Hotels = () => {
+const HotelsList = () => {
 
   const location = useLocation();
 
@@ -133,4 +133,4 @@ const Hotels = () => {
   );
 };
 
-export default Hotels;
+export default HotelsList;
