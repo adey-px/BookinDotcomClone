@@ -8,10 +8,10 @@ import {faBed, faCalendarDays, faCar, faPerson, faPlane,
 
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import './header.css'
+import './headerComp.css'
 
 
-const Header = ({type}) => {
+const HeaderComp = ({type}) => {
 
   // State hook for calender selection box
   const [openDate, setOpenDate] = useState(false)
@@ -39,13 +39,15 @@ const Header = ({type}) => {
     });
   };
 
-  // State hook for destination bar and search button
+  // State hook for home destination bar on search
   const navigate = useNavigate();
-  const [destination, setDestination] = useState("");
 
-  const handleSearch = () => {
-    navigate("/hotels", { state: { destination, date, option } });
+  // State hook for home search btn. Path here taken from index.js
+  const [destination, setDestination] = useState("");
+  const searchBtn = () => {
+    navigate("/hotels-by-city", { state: { destination, date, option } });
   }
+
 
   return (
     <div className="header">
@@ -180,7 +182,7 @@ const Header = ({type}) => {
               
               {/* Search button */}
               <div className="headerSearchItem">
-                <button className="headerBtn" onClick={handleSearch}>
+                <button className="headerBtn" onClick={searchBtn}>
                   Search
                 </button>
               </div>
@@ -193,4 +195,4 @@ const Header = ({type}) => {
   );
 }
 
-export default Header;
+export default HeaderComp;

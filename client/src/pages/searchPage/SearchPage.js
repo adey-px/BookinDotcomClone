@@ -3,27 +3,31 @@ import { format } from "date-fns";
 import { useLocation } from "react-router-dom";
 import { DateRange } from "react-date-range";
 
-import Navbar from "../../components/navbar/Navbar";
-import Header from "../../components/header/Header";
-import SearchItem from "../../components/search/SearchItem";
-import "./hotelsList.css";
+import NavbarComp from "../../components/navbarComp/NavbarComp";
+import HeaderComp from "../../components/headerComp/HeaderComp";
+import SearchList from "../../components/searchComp/SearchList";
+import useCount from "../../acustomHooks/useCount";
+import "./searchPage.css";
 
 
-const HotelsList = () => {
+const SearchPage = () => {
 
   const location = useLocation();
 
-  // State hooks from search bar in Header comp
+  // State hooks from search bar in header comp
   const [destination, setDestination] = useState(location.state.destination);
   const [date, setDate] = useState(location.state.date);
   const [openDate, setOpenDate] = useState(false);
   const [option, setOption] = useState(location.state.option);
 
+  // State var from useCount function hook. Path here taken from app.js/hotelRoute
+  const {loading, data, error, reFetch} = useCount(`/hotel/all-hotels?city=${destination}`)
+
   return (
     <div>
 
-      <Navbar />
-      <Header type="hotels-list" />
+      <NavbarComp />
+      <HeaderComp type="hotels-list" />
 
       <div className="listContainer">
         <div className="listWrapper">
@@ -115,16 +119,15 @@ const HotelsList = () => {
 
           </div>
 
+          {/* Search result on right. Item here is used in searchList comp */}
           <div className="listResult">
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+            {loading ? "Loading please wait..." : 
+              <>
+              {data.map(item => (
+                <SearchList item={item} key={item._id} />
+              ))}
+              </>
+            }
           </div>
 
         </div>
@@ -133,4 +136,4 @@ const HotelsList = () => {
   );
 };
 
-export default HotelsList;
+export default SearchPage;

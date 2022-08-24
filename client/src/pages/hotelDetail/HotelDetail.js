@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCircleArrowLeft, faCircleArrowRight, faCircleXmark, 
         faLocationDot} from "@fortawesome/free-solid-svg-icons";
 
-import Navbar from "../../components/navbar/Navbar";
-import Header from "../../components/header/Header";
-import MailingList from "../../components/mailing/MailingList";
-import Footer from "../../components/footer/Footer";
-import "./hotel.css";
+import NavbarComp from "../../components/navbarComp/NavbarComp";
+import HeaderComp from "../../components/headerComp/HeaderComp";
+import MailingList from "../../components/mailingComp/MailingList";
+import FooterComp from "../../components/footerComp/FooterComp";
+import "./hotelDetail.css";
 
 
-const Hotel = () => {
+const HotelDetail = () => {
 
   // State hook for slider
   const [sliderOpen, setSliderOpen] = useState(false);
@@ -62,8 +62,8 @@ const Hotel = () => {
   return (
     <div>
 
-      <Navbar />
-      <Header type="hotels-list" />
+      <NavbarComp />
+      <HeaderComp type="hotels-list" />
 
       <div className="hotelContainer">
 
@@ -160,11 +160,11 @@ const Hotel = () => {
         </div>
 
         <MailingList />
-        <Footer />
+        <FooterComp />
 
       </div>
     </div>
   );
 };
 
-export default Hotel;
+export default HotelDetail;
