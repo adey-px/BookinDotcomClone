@@ -2,8 +2,8 @@ import express from "express";
 
 import { verifyAdmin } from "../utils/verifyToken.js";
 
-import { allHotels, countByCity, countByType, createHotel, deleteHotel, 
-        getHotel, updateHotel } from "../views/hotelView.js";
+import { getHotels, countByCity, countByType, createHotel, deleteHotel, 
+        unitHotel, updateHotel } from "../views/hotelView.js";
 
 
 const router = express.Router();
@@ -12,12 +12,12 @@ const router = express.Router();
 router.post("/create-hotel", verifyAdmin, createHotel)
 
 // Read or get hotel
-router.get("/get-hotel/:id", getHotel)
+router.get("/unit-hotel/:id", unitHotel)
 
 // Read or get ALL hotels
-router.get("/all-hotels", allHotels)
-router.get("/count-by-city", countByCity)
-router.get("/count-by-type", countByType)
+router.get("/get-hotels", getHotels)
+router.get("/sort-by-city", countByCity)
+router.get("/sort-by-type", countByType)
 
 // Update hotel
 router.put("/update-hotel/:id", verifyAdmin, updateHotel)
@@ -26,4 +26,4 @@ router.put("/update-hotel/:id", verifyAdmin, updateHotel)
 router.delete("/delete/:id", verifyAdmin, deleteHotel)
 
 
-export default router
+export default router;

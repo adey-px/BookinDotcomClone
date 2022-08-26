@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 import "./searchList.css";
 
 
@@ -38,19 +39,19 @@ const SearchList = ({item}) => {
           </div>
           :
           <div className="siRating">
-          <span>No Rating</span>
-          <button>0.0</button>
-        </div>
+            <span>No Rating</span>
+            <button>0.0</button>
+          </div>
         }
 
         <div className="siDetailTexts">
           <span className="siPrice">${item.cheapestPrice}</span>
           <span className="siTaxOp">Includes taxes and fees</span>
 
-          {/* Path here taken from index.js route */}
-          <Link to={`/hotel/${item._id}`}>
+          {/*  Link to HotelDetail pg. Path from hotelRoute/index.js.*/}
+          <Link to={`/hotels/unit-hotel/${item._id}`}>
             <button className="siCheckButton">
-              See availability
+              Check Availability
             </button>
           </Link>
           

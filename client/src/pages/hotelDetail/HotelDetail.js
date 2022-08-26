@@ -1,18 +1,25 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCircleArrowLeft, faCircleArrowRight, faCircleXmark, 
         faLocationDot} from "@fortawesome/free-solid-svg-icons";
 
 import NavbarComp from "../../components/navbarComp/NavbarComp";
 import HeaderComp from "../../components/headerComp/HeaderComp";
-import MailingList from "../../components/mailingComp/MailingList";
+import MailingComp from "../../components/mailingComp/MailingComp";
 import FooterComp from "../../components/footerComp/FooterComp";
+import useFilter from "../../customhook/useFilter";
 import "./hotelDetail.css";
 
 
 const HotelDetail = () => {
 
-  // State hook for slider
+  // State hook linked to Check btn in searchList pg
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];  //Path from index/hotelRoute
+  const {loading, data, error} = useFilter(`/hotels/unit-hotel/${id}`);
+
+  // State hook for images slider
   const [sliderOpen, setSliderOpen] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
 
@@ -46,7 +53,6 @@ const HotelDetail = () => {
 
   // Action called on clicking arrows in slider
   const handleSliderMove = (direction) => {
-    
     let newSliderIndex;
 
     if (direction === "left") {
@@ -54,7 +60,6 @@ const HotelDetail = () => {
     } else {
       newSliderIndex = sliderIndex === 5 ? 0 : sliderIndex + 1;
     }
-
     setSliderIndex(newSliderIndex)
   };
 
@@ -65,104 +70,101 @@ const HotelDetail = () => {
       <NavbarComp />
       <HeaderComp type="hotels-list" />
 
-      <div className="hotelContainer">
+      {loading ? ("Loading please wait...") : (
+        <>
+        <div className="hotelContainer">
 
-        {/* Logic for display images in slider view */}
-        {sliderOpen && (
-          <div className="slider">
+          {/* Logic for display images in slider below */}
+          {sliderOpen && (
+            <div className="slider">
 
-            <FontAwesomeIcon
-              icon={faCircleXmark}
-              className="close"
-              onClick={() => setSliderOpen(false)}
-            />
+              <FontAwesomeIcon
+                icon={faCircleXmark}
+                className="close"
+                onClick={() => setSliderOpen(false)}
+              />
 
-            <FontAwesomeIcon
-              icon={faCircleArrowLeft}
-              className="arrow"
-              onClick={() => handleSliderMove("left")}
-            />
+              <FontAwesomeIcon
+                icon={faCircleArrowLeft}
+                className="arrow"
+                onClick={() => handleSliderMove("left")}
+              />
 
-            <div className="sliderWrapper">
-              <img className="sliderImg" src={image[sliderIndex].src} />
-            </div>
-
-            <FontAwesomeIcon
-              icon={faCircleArrowRight}
-              className="arrow"
-              onClick={() => handleSliderMove("right")}
-            />
-          </div>
-        )}
-        
-        {/* Texts above columns of hotel room images */}
-        <div className="hotelWrapper">
-          <button className="bookNow">Reserve or Book Now!</button>
-          <h1 className="hotelTitle">Tower Street Apartments</h1>
-
-          <div className="hotelAddress">
-            <FontAwesomeIcon icon={faLocationDot} />
-            <span>Elton St 125 New york</span>
-          </div>
-
-          <span className="hotelDistance">
-            Excellent location – 500m from center
-          </span>
-          <span className="hotelPriceHighlight">
-            Book a stay over $114 at this property and get a free airport taxi
-          </span>
-
-          {/* Columns of images of selected hotel room */}
-          <div className="hotelImages">
-            {image.map((image, i) => (
-              <div className="hotelImgWrapper" key={i}>
-                <img
-                  className="hotelImg"
-                  src={image.src} 
-                  alt="Room interior view"
-                  onClick={() => handleSliderOpen(i)}
+              <div className="sliderWrapper">
+                <img className="sliderImg" src={image[sliderIndex].src} 
+                  alt=""
                 />
+                
               </div>
-            ))}
-          </div>
 
-          {/* Texts and info below columns of hotel room images */}
-          <div className="hotelDetails">
-            <div className="hotelDetailsTexts">
-              <h1 className="hotelTitle">Stay in the heart of City</h1>
-              <p className="hotelDesc">
-                Located a 5-minute walk from St. Florian's Gate in Krakow, Tower
-                Street Apartments has accommodations with air conditioning and
-                free WiFi. The units come with hardwood floors and feature a
-                fully equipped kitchenette with a microwave, a flat-screen TV,
-                and a private bathroom with shower and a hairdryer. A fridge is
-                also offered, as well as an electric tea pot and a coffee
-                machine. Popular points of interest near the apartment include
-                Cloth Hall, Main Market Square and Town Hall Tower. The nearest
-                airport is John Paul II International Kraków–Balice, 16.1 km
-                from Tower Street Apartments, and the property offers a paid
-                airport shuttle service.
-              </p>
+              <FontAwesomeIcon
+                icon={faCircleArrowRight}
+                className="arrow"
+                onClick={() => handleSliderMove("right")}
+              />
+            </div>
+          )}
+          
+          {/* Texts above columns of hotel room images */}
+          <div className="hotelWrapper">
+            <button className="bookNow">Reserve or Book Now!</button>
+            <h1 className="hotelTitle">{data.name}</h1>
+
+            <div className="hotelAddress">
+              <FontAwesomeIcon icon={faLocationDot} />
+              <span>{data.address}</span>
             </div>
 
-            <div className="hotelDetailsPrice">
-              <h1>Perfect for a 9-night stay!</h1>
-              <span>
-                Located in the real heart of Krakow, this property has an
-                excellent location score of 9.8!
-              </span>
+            <span className="hotelDistance">
+              Excellent location - {data.distance}m from center
+            </span>
+            <span className="hotelPriceHighlight">
+              Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
+            </span>
 
-              <h2><b>$945</b> (9 nights)</h2>
-              <button>Reserve or Book Now!</button>
+            {/* Columns of images of selected hotel room */}
+            <div className="hotelImages">
+              {image.map((image, i) => (
+                <div className="hotelImgWrapper" key={i}>
+                  <img
+                    className="hotelImg"
+                    src={image.src} 
+                    alt="Room interior view"
+                    onClick={() => handleSliderOpen(i)}
+                  />
+                </div>
+              ))}
             </div>
 
+            {/* Texts and info below columns of hotel room images */}
+            <div className="hotelDetails">
+              <div className="hotelDetailsTexts">
+                <h1 className="hotelTitle">{data.title}</h1>
+                <p className="hotelDesc">
+                  {data.description}
+                </p>
+              </div>
+
+              <div className="hotelDetailsPrice">
+                <h1>Perfect for a 9-night stay!</h1>
+                <span>
+                  Located in the real heart of Krakow, this property has an
+                  excellent location score of 9.8!
+                </span>
+
+                <h2><b>$945</b> (9 nights)</h2>
+                <button>Reserve or Book Now!</button>
+              </div>
+
+            </div>
           </div>
+
+          <MailingComp />
+          <FooterComp />
+
         </div>
-
-        <MailingList />
-        <FooterComp />
-
-      </div>
+        </>
+      )}
     </div>
   );
 };

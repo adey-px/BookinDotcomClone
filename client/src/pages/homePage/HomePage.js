@@ -5,7 +5,7 @@ import HeaderComp from '../../components/headerComp/HeaderComp';
 import FeaturedCity from '../../components/featuredCity/FeaturedCity';
 import FeaturedType from '../../components/featuredType/FeaturedType';
 import FeaturedProp from '../../components/featuredProp/FeaturedProp';
-import MailingList from '../../components/mailingComp/MailingList';
+import MailingList from '../../components/mailingComp/MailingComp';
 import FooterComp from '../../components/footerComp/FooterComp';
 import './homePage.css';
 

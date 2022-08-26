@@ -1,11 +1,11 @@
-import useCount from "../../acustomHooks/useCount";
+import useFilter from "../../customhook/useFilter";
 import "./featuredType.css";
 
 
 const FeaturedType = () => {
 
-  // State variables from usecount function hook
-  const {data, loading, error} = useCount("/hotel/count-by-type");
+  // State variables from usecount function hook. Path taken from app.js
+  const {data, loading, error} = useFilter("/hotels/sort-by-type");
 
   const display = [
     "https://cf.bstatic.com/xdata/images/xphoto/square300/57584488.webp?k=bf724e4e9b9b75480bbe7fc675460a089ba6414fe4693b83ea3fdd8e938832a6&o=",

@@ -5,9 +5,9 @@ import { DateRange } from "react-date-range";
 
 import NavbarComp from "../../components/navbarComp/NavbarComp";
 import HeaderComp from "../../components/headerComp/HeaderComp";
-import SearchList from "../../components/searchComp/SearchList";
-import useCount from "../../acustomHooks/useCount";
+import SearchList from "../../components/searchList/SearchList";
 import "./searchPage.css";
+import useFilter from "../../customhook/useFilter";
 
 
 const SearchPage = () => {
@@ -20,8 +20,18 @@ const SearchPage = () => {
   const [openDate, setOpenDate] = useState(false);
   const [option, setOption] = useState(location.state.option);
 
-  // State var from useCount function hook. Path here taken from app.js/hotelRoute
-  const {loading, data, error, reFetch} = useCount(`/hotel/all-hotels?city=${destination}`)
+  // State hooks for min & max
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState(undefined);
+
+  // State var from useCount function hook. Prefix path taken from app.js/hotelRoute
+  const {loading, data, error, sortData} = useFilter(`/hotels/get-hotels?city=${destination}&min=${min || 0}&max=${max || 999}`);
+
+  // search button function. Refetch taken from useCount custom hook
+  const searchBtn = () => {
+    sortData();
+  };
+
 
   return (
     <div>
@@ -68,7 +78,10 @@ const SearchPage = () => {
                     Min price <small>per night</small>
                   </span>
 
-                  <input type="number" className="lsOptionInput" />
+                  <input type="number" 
+                         className="lsOptionInput" 
+                         onChange={e => setMin(e.target.value)}
+                  />
                 </div>
 
                 <div className="lsOptionItem">
@@ -76,7 +89,10 @@ const SearchPage = () => {
                     Max price <small>per night</small>
                   </span>
 
-                  <input type="number" className="lsOptionInput" />
+                  <input type="number" 
+                         className="lsOptionInput" 
+                         onChange={e => setMax(e.target.value)}
+                  />
                 </div>
 
                 <div className="lsOptionItem">
@@ -115,11 +131,11 @@ const SearchPage = () => {
               </div>
             </div>
 
-            <button>Search</button>
+            <button onClick={searchBtn}>Search</button>
 
           </div>
 
-          {/* Search result on right. Item here is used in searchList comp */}
+          {/* Search result on right. Pass item to searchList comp */}
           <div className="listResult">
             {loading ? "Loading please wait..." : 
               <>

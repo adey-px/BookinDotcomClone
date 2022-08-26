@@ -15,8 +15,8 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/hotels-by-city" element={<SearchList />} />
-      <Route path="/hotel/:id" element={<HotelDetail />} />
+      <Route path="hotels/sort-by-city" element={<SearchList />} />
+      <Route path="hotels/unit-hotel/:id" element={<HotelDetail />} />
     </Routes>
   </BrowserRouter>
 

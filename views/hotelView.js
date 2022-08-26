@@ -14,7 +14,7 @@ export const createHotel = async (req, res, next) => {
 
 
 // Read or get hotel
-export const getHotel = async (req, res, next) => {
+export const unitHotel = async (req, res, next) => {
     try {
         const hotel = await Hotel.findbyId(
             req.params.id
@@ -27,7 +27,7 @@ export const getHotel = async (req, res, next) => {
 
 
 // Read or get all hotels
-export const allHotels = async (req, res, next) => {
+export const getHotels = async (req, res, next) => {
     const {min, max, ...others} = req.query;
     try {
         const hotels = await Hotel.find({

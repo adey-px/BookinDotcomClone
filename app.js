@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import authRoute from "./routes/authRoute.js";
 import hotelRoute from "./routes/hotelRoute.js";
@@ -29,6 +30,9 @@ mongoose.connection.on("disconnected", () => {
     console.log("App disconnected from mongodb (:")
 });
 
+// Optional to using proxy in client/package.json
+app.use(cors())
+
 // Middleware to set token for user when login
 app.use(cookieParser())
 
@@ -36,10 +40,10 @@ app.use(cookieParser())
 app.use(express.json())
 
 // Middleware prefixes for paths in route files
-app.use("/auth", authRoute);
-app.use("/hotel", hotelRoute);
-app.use("/room", roomRoute);
-app.use("/user", userRoute);
+app.use("/auths", authRoute);
+app.use("/hotels", hotelRoute);
+app.use("/rooms", roomRoute);
+app.use("/users", userRoute);
 
 // Middleware for custom error handling
 app.use((err, req, res, next) => {

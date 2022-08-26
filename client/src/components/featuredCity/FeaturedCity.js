@@ -1,12 +1,12 @@
-import useCount from "../../acustomHooks/useCount";
+import useFilter from "../../customhook/useFilter";
 
 import "./featuredCity.css";
 
 
 const FeaturedCity = () => {
 
-  // State variables from usecount function hook
-  const {data, loading, error} = useCount("/hotel/count-by-city?locations=Lagos,Dallas,London");
+  // State variables from usecount function hook. Path from app.js/hotelRoute=index.js
+  const {data, loading, error} = useFilter("/hotels/sort-by-city?locations=Lagos,Dallas,London");
 
   return (
     <div className="featured">

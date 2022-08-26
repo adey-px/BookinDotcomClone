@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 // Function hook to load data for featured sections
-const useCount = (url) => {
+const useFilter = (url) => {
 
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
@@ -11,7 +11,7 @@ const useCount = (url) => {
 
     useEffect (() => {
         //
-        const fetchData = async () => {
+        const getData = async () => {
             setLoading(true);
             try {
                 const res = await axios.get(url);
@@ -20,15 +20,15 @@ const useCount = (url) => {
             } catch (err) {
                 setError(err);  
             }
-            setLoading(false)
+            setLoading(false);
         };
-        fetchData();
+        getData();
     }, 
-        [url]
+        [url] // Empty if auto not desired in reFetch
     );
 
-    //
-    const reFetch = async () => {
+    // Function called to search again in searchPage
+    const sortData = async () => {
         setLoading(true);
         try {
             const res = await axios.get(url);
@@ -37,11 +37,11 @@ const useCount = (url) => {
         } catch (err) {
             setError(err);  
         }   
-        setLoading(false)
+        setLoading(false);
     };
 
-    return {data, loading, error, reFetch};
+    return {loading, data, error, sortData};
 };
 
 
-export default useCount;
+export default useFilter;

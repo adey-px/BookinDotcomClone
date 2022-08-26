@@ -1,11 +1,11 @@
-import useCount from "../../acustomHooks/useCount";
+import useFilter from "../../customhook/useFilter";
 import "./featuredProp.css";
 
 
 const FeaturedProp = () => {
 
-  // State variables from usecount function hook
-  const {loading, data, error} = useCount("hotel/all-hotels?featured=true&limit=4");
+  // State variables from usecount function hook. Path from app.js/hotelRoute
+  const {loading, data, error} = useFilter("hotels/get-hotels?featured=true&limit=4");
 
   return (
     <div className="fp"> 

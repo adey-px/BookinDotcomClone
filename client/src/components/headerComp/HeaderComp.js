@@ -45,7 +45,7 @@ const HeaderComp = ({type}) => {
   // State hook for home search btn. Path here taken from index.js
   const [destination, setDestination] = useState("");
   const searchBtn = () => {
-    navigate("/hotels-by-city", { state: { destination, date, option } });
+    navigate("hotels/sort-by-city", { state: { destination, date, option } });
   }
 
 
