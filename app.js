@@ -20,14 +20,14 @@ dotenv.config();
 const connect = async () => {
     try {
         await mongoose.connect(process.env.MONGO);
-        console.log("App connected to mongodb...")
+        console.log("Mongodb server is connected...")
 
       } catch (error) {
         throw error;
       }
 };
 mongoose.connection.on("disconnected", () => {
-    console.log("App disconnected from mongodb (:")
+    console.log("Mongodb server is down...(:");
 });
 
 // Optional to using proxy in client/package.json
@@ -63,5 +63,5 @@ app.use((err, req, res, next) => {
 // Connect app to node server with call to db
 app.listen(5000, () => {
     connect()
-    console.log("App connected to node server...")
-})
+    console.log("Development server is running...")
+});

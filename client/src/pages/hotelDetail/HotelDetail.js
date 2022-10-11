@@ -16,8 +16,8 @@ const HotelDetail = () => {
 
   // State hook linked to Check btn in searchList pg
   const location = useLocation();
-  const id = location.pathname.split("/")[2];  //Path from index/hotelRoute
-  const {loading, data, error} = useFilter(`/hotels/unit-hotel/${id}`);
+  const id = location.pathname.split("/")[3];  //Path from index & hotelRoute
+  const {loading, data} = useFilter(`/hotels/unit-hotel/${id}`);
 
   // State hook for images slider
   const [sliderOpen, setSliderOpen] = useState(false);
@@ -62,7 +62,6 @@ const HotelDetail = () => {
     }
     setSliderIndex(newSliderIndex)
   };
-
 
   return (
     <div>

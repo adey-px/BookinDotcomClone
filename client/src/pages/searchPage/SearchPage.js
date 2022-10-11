@@ -9,9 +9,7 @@ import SearchList from "../../components/searchList/SearchList";
 import "./searchPage.css";
 import useFilter from "../../customhook/useFilter";
 
-
 const SearchPage = () => {
-
   const location = useLocation();
 
   // State hooks from search bar in header comp
@@ -20,29 +18,28 @@ const SearchPage = () => {
   const [openDate, setOpenDate] = useState(false);
   const [option, setOption] = useState(location.state.option);
 
-  // State hooks for min & max
+  // State hooks for min & max filter
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
 
   // State var from useCount function hook. Prefix path taken from app.js/hotelRoute
-  const {loading, data, error, sortData} = useFilter(`/hotels/get-hotels?city=${destination}&min=${min || 0}&max=${max || 999}`);
+  const { loading, data, error, sortData } = useFilter(
+    `/hotels/get-hotels?city=${destination}&min=${min || 0}&max=${max || 999}`
+  );
 
   // search button function. Refetch taken from useCount custom hook
   const searchBtn = () => {
     sortData();
   };
 
-
   return (
     <div>
-
       <NavbarComp />
       <HeaderComp type="hotels-list" />
 
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
-
             <h1 className="lsTitle">Your Current Search</h1>
 
             <div className="lsItem">
@@ -53,10 +50,11 @@ const SearchPage = () => {
             <div className="lsItem">
               <label>Length of stay</label>
 
-              <span onClick={() => setOpenDate(!openDate)}> 
-                {`${format(date[0].startDate, "MM/dd/yyyy"
-                )} to ${format(date[0].endDate, "MM/dd/yyyy")}`
-                }
+              <span onClick={() => setOpenDate(!openDate)}>
+                {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
+                  date[0].endDate,
+                  "MM/dd/yyyy"
+                )}`}
               </span>
 
               {openDate && (
@@ -73,14 +71,13 @@ const SearchPage = () => {
 
               <div className="lsOptions">
                 <div className="lsOptionItem">
-
                   <span className="lsOptionText">
                     Min price <small>per night</small>
                   </span>
-
-                  <input type="number" 
-                         className="lsOptionInput" 
-                         onChange={e => setMin(e.target.value)}
+                  <input
+                    type="number"
+                    className="lsOptionInput"
+                    onChange={(e) => setMin(e.target.value)}
                   />
                 </div>
 
@@ -88,16 +85,15 @@ const SearchPage = () => {
                   <span className="lsOptionText">
                     Max price <small>per night</small>
                   </span>
-
-                  <input type="number" 
-                         className="lsOptionInput" 
-                         onChange={e => setMax(e.target.value)}
+                  <input
+                    type="number"
+                    className="lsOptionInput"
+                    onChange={(e) => setMax(e.target.value)}
                   />
                 </div>
 
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Adult</span>
-
                   <input
                     type="number"
                     min={1}
@@ -108,7 +104,6 @@ const SearchPage = () => {
 
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Children</span>
-
                   <input
                     type="number"
                     min={0}
@@ -119,7 +114,6 @@ const SearchPage = () => {
 
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Room</span>
-
                   <input
                     type="number"
                     min={1}
@@ -127,25 +121,24 @@ const SearchPage = () => {
                     placeholder={option.room}
                   />
                 </div>
-
               </div>
             </div>
 
             <button onClick={searchBtn}>Search</button>
-
           </div>
 
           {/* Search result on right. Pass item to searchList comp */}
           <div className="listResult">
-            {loading ? "Loading please wait..." : 
+            {loading ? (
+              "Loading please wait..."
+            ) : (
               <>
-              {data.map(item => (
-                <SearchList item={item} key={item._id} />
-              ))}
+                {data.map((item) => (
+                  <SearchList item={item} key={item._id} />
+                ))}
               </>
-            }
+            )}
           </div>
-
         </div>
       </div>
     </div>

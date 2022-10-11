@@ -12,11 +12,10 @@ export const createHotel = async (req, res, next) => {
     }
 }
 
-
 // Read or get hotel
 export const unitHotel = async (req, res, next) => {
     try {
-        const hotel = await Hotel.findbyId(
+        const hotel = await Hotel.findById(
             req.params.id
         );     
         res.status(200).json(hotel);
@@ -24,7 +23,6 @@ export const unitHotel = async (req, res, next) => {
         next(err);
     }
 }
-
 
 // Read or get all hotels
 export const getHotels = async (req, res, next) => {
@@ -86,7 +84,6 @@ export const updateHotel = async (req, res, next) => {
         next(err)
     }
 }
-
 
 // Delete hotel
 export const deleteHotel = async (req, res, next) => {
