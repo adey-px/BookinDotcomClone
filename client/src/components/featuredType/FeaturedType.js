@@ -1,4 +1,4 @@
-import useFilter from "../../customhook/useFilter";
+import useFilter from "../../customHuk/useFilter";
 import "./featuredType.css";
 
 

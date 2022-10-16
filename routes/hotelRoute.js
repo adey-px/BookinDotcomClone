@@ -10,6 +10,7 @@ import {
   deleteHotel,
   unitHotel,
   updateHotel,
+  getHotelRooms,
 } from "../controllers/hotelContr.js";
 
 const router = express.Router();
@@ -30,5 +31,9 @@ router.put("/update-hotel/:id", verifyAdmin, updateHotel);
 
 // Delete hotel
 router.delete("/delete/:id", verifyAdmin, deleteHotel);
+
+// Get hotel rooms
+router.get("/room/:id", getHotelRooms);
+
 
 export default router;

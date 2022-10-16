@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const { Schema } = mongoose;
 
 // Room model
@@ -26,13 +25,10 @@ const RoomSchema = new Schema(
       required: true,
     },
 
-    roomNumber: [{number: Number, 
-                   unAvailable: {type: [Date]}
-                }],
+    roomNumber: [{ number: Number, unAvailableDate: { type: [Date] } }],
   },
 
   { timestamps: true }
-
 );
 
 export default mongoose.model("Room", RoomSchema);

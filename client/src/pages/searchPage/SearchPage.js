@@ -2,14 +2,15 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useLocation } from "react-router-dom";
 import { DateRange } from "react-date-range";
+import useFilter from "../../customHuk/useFilter";
 
 import NavbarComp from "../../components/navbarComp/NavbarComp";
 import HeaderComp from "../../components/headerComp/HeaderComp";
 import SearchList from "../../components/searchList/SearchList";
 import "./searchPage.css";
-import useFilter from "../../customhook/useFilter";
 
 const SearchPage = () => {
+  //
   const location = useLocation();
 
   // State hooks from search bar in header comp

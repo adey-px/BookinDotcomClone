@@ -1,7 +1,6 @@
 import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
 
-
 // Create new room in hotel
 export const createRoom = async (req, res, next) => {
   const hotelId = req.params.hotelid;
@@ -18,73 +17,78 @@ export const createRoom = async (req, res, next) => {
     }
 
     res.status(200).json(newRoom);
-
   } catch (err) {
     next(err);
   }
 };
-
 
 // Read or get room in hotel
 export const getRoom = async (req, res, next) => {
   try {
     const room = await Room.findById(req.params.id);
     res.status(200).json(room);
-  
   } catch (err) {
     next(err);
   }
 };
-  
 
 // Read or get ALL rooms in hotel
 export const allRooms = async (req, res, next) => {
   try {
     const rooms = await Room.find();
     res.status(200).json(rooms);
-  
   } catch (err) {
     next(err);
   }
 };
-
 
 // Update room in hotel
 export const updateRoom = async (req, res, next) => {
   try {
     const updatedRoom = await Room.findByIdAndUpdate(
       req.params.id,
-      
+
       { $set: req.body },
       { new: true }
     );
 
     res.status(200).json(updatedRoom);
-
   } catch (err) {
     next(err);
   }
 };
-
 
 // Update room status in hotel
 export const roomStatus = async (req, res, next) => {
   try {
     await Room.updateOne(
       { "roomNumber._id": req.params.id },
-      {$push: {
-          "roomNumber.$.unAvailable": req.body.dates
+      {
+        $push: {
+          "roomNumber.$.unAvailable": req.body.dates,
         },
       }
     );
 
     res.status(200).json("Room status has been updated.");
-
   } catch (err) {
     next(err);
   }
 };
 
+// Update room availability in hotel
+export const updateRmAvailable = async (req, res, next) => {
+  try {
+    await Room.updateOne({"roomNumber._id": req.params.id}, {
+      $push: {
+        "roomNumber.$.unAvailableDate": req.body.date
+      },
+    });
+    res.status(200).json(updatedRoom);
+  } catch (err) {
+    next(err);
+  }
+};
 
 // Delete room in hotel
 export const deleteRoom = async (req, res, next) => {
@@ -101,7 +105,6 @@ export const deleteRoom = async (req, res, next) => {
     }
 
     res.status(200).json("Room has been deleted.");
-
   } catch (err) {
     next(err);
   }
