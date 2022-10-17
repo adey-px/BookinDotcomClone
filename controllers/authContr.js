@@ -30,16 +30,12 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const authUser = await User.findOne({ username: req.body.username });
-    const authPass = await bcrypt.compare(req.body.password, authUser.password);
-
     if (!authUser)
       return next(createError(404, "Sorry! this user is not found"));
 
+    const authPass = await bcrypt.compare(req.body.password, authUser.password);
     if (!authPass)
       return next(createError(400, "Check your password and try again"));
-
-    // Prevent user password etc from being sent over http when login
-    const { password, isAdmin, ...otherDetails } = authUser._doc;
 
     // To verify identity, hide selected user details in jwt, sent into cookie
     const userToken = jwt.sign(
@@ -47,11 +43,14 @@ export const login = async (req, res, next) => {
       process.env.JWT
     );
 
+    // Prevent user password etc from being sent over http when login
+    const { password, isAdmin, ...otherDetails } = authUser._doc;
+
     // Set cookie for checking user role and permission
     res
       .cookie("access_token", userToken, { httpOnly: true })
       .status(200)
-      .json({ ...otherDetails });
+      .json({ details: { ...otherDetails }, isAdmin });
   } catch (err) {
     next(err);
   }
