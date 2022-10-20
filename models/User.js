@@ -28,6 +28,10 @@ const UserSchema = new Schema(
       required: true,
     },
 
+    image: {
+      type: String,
+    },
+
     city: {
       type: String,
       required: true,
@@ -42,11 +46,6 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
-
-    image: {
-      type: String,
-    },
-
   },
 
   {timestamps: true}

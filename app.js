@@ -61,7 +61,7 @@ app.use((err, req, res, next) => {
 
 
 // Connect app to node server with call to db
-app.listen(5000, () => {
+app.listen(4000, () => {
     connect()
     console.log("Development server is running...")
 });

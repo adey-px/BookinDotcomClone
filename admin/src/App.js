@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { productInputs, userInputs } from "./formSource";
-import { DarkModeContext } from "./context/darkModeContext";
-import { AuthsContext } from "./context/AuthsContext";
+import { DarkModeContext } from "./contextApi/darkModeContext";
+import { AuthsContext } from "./contextApi/AuthsContext";
 
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";

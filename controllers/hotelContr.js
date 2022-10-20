@@ -22,6 +22,21 @@ export const unitHotel = async (req, res, next) => {
   }
 };
 
+// Read or get rooms in hotel
+export const hotelRooms = async (req, res, next) => {
+  try {
+    const hotel = await Hotel.findById(req.params.id);
+    const list = await Promise.all(hotel.room.map(item => {
+        return Room.findById(item)
+        })
+    );
+    res.status(200).json(list)
+
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Read or get all hotels
 export const getHotels = async (req, res, next) => {
   const { min, max, ...others } = req.query;
@@ -37,6 +52,7 @@ export const getHotels = async (req, res, next) => {
   }
 };
 
+// Filter all hotels by city
 export const countByCity = async (req, res, next) => {
   const getCities = req.query.locations.split(",");
   try {
@@ -51,6 +67,7 @@ export const countByCity = async (req, res, next) => {
   }
 };
 
+// // Filter all hotels by type
 export const countByType = async (req, res, next) => {
   try {
     const countApt = await Hotel.countDocuments({ category: "Apartment" });
@@ -90,21 +107,6 @@ export const deleteHotel = async (req, res, next) => {
   try {
     await Hotel.findByIdAndDelete(req.params.id);
     res.status(200).json("Hotel deleted successfully");
-  } catch (err) {
-    next(err);
-  }
-};
-
-// Get hotel rooms
-export const getHotelRooms = async (req, res, next) => {
-  try {
-    const hotel = await Hotel.findById(req.params.id);
-    const list = await Promise.all(hotel.room.map(item => {
-        return Room.findById(item)
-        })
-    );
-    res.status(200).json(list)
-
   } catch (err) {
     next(err);
   }

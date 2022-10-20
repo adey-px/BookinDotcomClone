@@ -1,67 +1,73 @@
 import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import useNavigate from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { SearchContext } from "../../contextApi/SearchContext";
 import useFilter from "../../customHuk/useFilter";
 import "./hotelReserve.css";
 
-
-// Pop up to reserve hotel room
 const HotelReserve = ({ setOpen, hotelId }) => {
-  //
-  const [selectRoom, setSelectRoom] = useState([]);
-  //
-  const { loading, data, error } = useFilter(`hotels/room/${hotelId}`);
 
-  //
+  // State variables for handleSelect check box
+  const [selectRoom, setSelectRoom] = useState([]);
+
+  // Fetch room data from hotelRoute, prefix get from hotelDetail pg
+  const { loading, data, error } = useFilter(`rooms/${hotelId}`);
+
+  // Bring date in hotelDetail pg to get dateRange
   const { date } = useContext(SearchContext);
 
-  const getDateRange = (startDate, endDate) => {
+  const dateRange = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
-    const sdate = new Date(start.getTime());
+    
+    const d = new Date(start.getTime());
 
-    let list = [];
-    while (data <= end) {
-      list.push(new Date(sdate).getTime());
-      sdate.setDate(sdate.getDate() + 1);
+    let date = []
+
+    // loop over date range and push
+    while (date <= end) {
+      date.push(new Date(d).getTime());
+      d.setDate(d.getDate() + 1);
     }
-    return list;
+    return date
   };
 
+  // Use dateRange to update unavailable date on selected room 
+  const allDates = dateRange(date[0].startDate, date[0].endDate);
+  console.log(allDates);
   //
-  const allDate = getDateRange(date[0].startDate, date[0].endDate);
-
   const isAvailable = (roomNumber) => {
     const isFound = roomNumber.unAvailableDate.some((sdate) =>
-      allDate.includes(new Date(sdate).getTime())
+      allDates.includes(new Date(sdate).getTime())
     );
     return !isFound;
   };
 
-  //
+  // Handle room select check boxes
   const handleSelect = (e) => {
     const checked = e.target.checked;
     const value = e.target.value;
+    // Get room if checked, empty if uncheked
     setSelectRoom(
       checked
         ? [...selectRoom, value]
         : selectRoom.filter((item) => item !== value)
     );
   };
+  // console.log(selectRoom);
 
-  //
+  // Handle reserve now btn on open modal
   const navigate = useNavigate();
 
-  const handleClick = async () => {
+  const reservBtn = async () => {
     try {
       await Promise.all(
         selectRoom.map((roomId) => {
-          const res = axios.put(`/rooms/available-room/${roomId}`, {
-            date: allDate,
+          const res = axios.put(`/rooms/update-status/${roomId}`, {
+            date: allDates,
           });
           return res.data;
         })
@@ -82,13 +88,14 @@ const HotelReserve = ({ setOpen, hotelId }) => {
 
         <span>Select your rooms:</span>
 
+        {/* room data fetched with useFilter above */}
         {data.map((item) => (
           <div className="rItem">
             <div className="rItemInfo">
               <div className="rTitle">{item.title}</div>
               <div className="rDesc">{item.description}</div>
               <div className="rMax">
-                Max people: <b>{item.maxPeople}</b>
+                Max persons: <b>{item.maxPerson}</b>
               </div>
               <div className="rPrice">{item.price}</div>
             </div>
@@ -109,7 +116,7 @@ const HotelReserve = ({ setOpen, hotelId }) => {
           </div>
         ))}
 
-        <button className="rButton" onClick={handleClick}>
+        <button className="rButton" onClick={reservBtn}>
           Reserve Now!
         </button>
       </div>

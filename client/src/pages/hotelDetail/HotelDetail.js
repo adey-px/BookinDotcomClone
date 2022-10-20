@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SearchContext } from "../../contextApi/SearchContext";
 import {
   faCircleArrowLeft,
   faCircleArrowRight,
@@ -15,10 +14,13 @@ import MailingComp from "../../components/mailingComp/MailingComp";
 import FooterComp from "../../components/footerComp/FooterComp";
 import useFilter from "../../customHuk/useFilter";
 import { AuthsContext } from "../../contextApi/AuthsContext";
+import { SearchContext } from "../../contextApi/SearchContext";
 import HotelReserve from "../../components/hotelReserve/HotelReserve";
-import './hotelDetail.css';
+import "./hotelDetail.css";
+
 
 const HotelDetail = () => {
+  //
   // State hook linked to Check btn in searchList pg
   const location = useLocation();
   const id = location.pathname.split("/")[3]; //Path from index & hotelRoute
@@ -27,20 +29,21 @@ const HotelDetail = () => {
   const [sliderOpen, setSliderOpen] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
 
-  // State hook for reserveBtn, if user is logged in
+  // State hook for reserve Btn, if user is logged in
   const [openModal, setOpenModal] = useState(false);
 
   //
   const { loading, data, error } = useFilter(`/hotels/unit-hotel/${id}`);
-  //
+
+  // Import user obj from Authscontext & useNavigate
   const { user } = useContext(AuthsContext);
   const navigate = useNavigate();
 
   // SearchContext.js, pass num of days from searchpage
   const { date, option } = useContext(SearchContext);
-  //
+
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-  //
+
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
@@ -67,8 +70,8 @@ const HotelDetail = () => {
     setSliderIndex(newSliderIndex);
   };
 
-  // Reserver btn, first import user from AuthsContext
-  const reservBtn = () => {
+  // Reserve btn, work with Authscontext condition
+  const handleClick = () => {
     if (user) {
       setOpenModal(true);
     } else {
@@ -141,7 +144,7 @@ const HotelDetail = () => {
 
             {/* Texts above columns of hotel room images */}
             <div className="hotelWrapper">
-              <button onClick={reservBtn} className="bookNow">
+              <button onClick={handleClick} className="bookNow">
                 Reserve or Book Now!
               </button>
               <h1 className="hotelTitle">{data.name}</h1>
@@ -191,7 +194,8 @@ const HotelDetail = () => {
                     <b>${days * data.cheapestPrice * option.room}</b>({days}{" "}
                     nights)
                   </h2>
-                  <button onClick={reservBtn}>Reserve or Book Now!</button>
+
+                  <button onClick={handleClick}>Reserve or Book Now!</button>
                 </div>
               </div>
             </div>
@@ -201,9 +205,12 @@ const HotelDetail = () => {
           </div>
         </>
       )}
+
+      {/* HotelReserve comp */}
       {openModal && <HotelReserve setOpen={setOpenModal} hotelId={id} />}
     </div>
   );
 };
 
 export default HotelDetail;
+

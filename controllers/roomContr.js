@@ -58,33 +58,19 @@ export const updateRoom = async (req, res, next) => {
   }
 };
 
-// Update room status in hotel
-export const roomStatus = async (req, res, next) => {
+// Update room status for unavailable date in hotel
+export const updateRmStatus = async (req, res, next) => {
   try {
     await Room.updateOne(
       { "roomNumber._id": req.params.id },
       {
         $push: {
-          "roomNumber.$.unAvailable": req.body.dates,
+          "roomNumber.$.unAvailableDate": req.body.date,
         },
       }
     );
 
-    res.status(200).json("Room status has been updated.");
-  } catch (err) {
-    next(err);
-  }
-};
-
-// Update room availability in hotel
-export const updateRmAvailable = async (req, res, next) => {
-  try {
-    await Room.updateOne({"roomNumber._id": req.params.id}, {
-      $push: {
-        "roomNumber.$.unAvailableDate": req.body.date
-      },
-    });
-    res.status(200).json(updatedRoom);
+    res.status(200).json("Unavailable date has been updated.");
   } catch (err) {
     next(err);
   }

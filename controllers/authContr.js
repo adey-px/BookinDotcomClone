@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { createError } from "../utils/error.js";
 
+
 // Register new user account
 export const register = async (req, res, next) => {
   try {
@@ -11,12 +12,8 @@ export const register = async (req, res, next) => {
     const hash = bcrypt.hashSync(req.body.password, salt);
 
     const user = new User({
-      username: req.body.username,
-      email: req.body.email,
+      ...req.body,
       password: hash,
-      country: req.body.country,
-      city: req.body.city,
-      phone: req.body.phone,
     });
 
     await user.save();
