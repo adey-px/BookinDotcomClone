@@ -20,7 +20,7 @@ const Datatable = () => {
         return (
           <div className="cellAction">
             <Link
-              to="/api-Admin/all-Users/sample"
+              to="/all-Users/sample"
               style={{ textDecoration: "none" }}
             >
               <div className="viewButton">View</div>

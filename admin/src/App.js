@@ -23,7 +23,7 @@ function App() {
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
-          <Route path="/api-Admin">
+          <Route path="/">
             <Route index element={<HomePage />} />
             <Route path="login" element={<UserLogin />} />
 
