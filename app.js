@@ -25,7 +25,7 @@ const connect = async () => {
   }
 };
 mongoose.connection.on("disconnected", () => {
-  console.log("Mongodb server is down...(:");
+  console.log("Mongodb server is down...");
 });
 
 // Optional to using proxy in client/package.json
