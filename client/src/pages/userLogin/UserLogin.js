@@ -1,20 +1,21 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-
-import { AuthsContext } from '../../contextApi/AuthsContext';
 import './userLogin.css';
 
+//
 const UserLogin = () => {
 	const [credentials, setCredentials] = useState({
 		username: undefined,
 		password: undefined,
 	});
 
-	// From AuthsContext, also used in navbar login
-	const { loading, error, dispatch } =
-		useContext(AuthsContext);
+	/* from AuthContext, also used in navbar login */
+	const { user, loading, error, dispatch } =
+		useContext(AuthContext);
 
+	/* input handler */
 	const inputHandler = (e) => {
 		setCredentials((prev) => ({
 			...prev,
@@ -22,11 +23,11 @@ const UserLogin = () => {
 		}));
 	};
 
-	// If login succeeds, to redirect
+	// to redirect, if login succeeds
 	const navigate = useNavigate();
 
-	// Login button
-	const loginBtn = async (e) => {
+	// login handler
+	const loginHandler = async (e) => {
 		e.preventDefault();
 		dispatch({ type: 'LOGIN_START' });
 		try {
@@ -36,8 +37,9 @@ const UserLogin = () => {
 			);
 			dispatch({
 				type: 'LOGIN_SUCCESS',
-				payload: res.data.details,
+				payload: res.data,
 			});
+
 			navigate('/');
 		} catch (err) {
 			dispatch({
@@ -46,6 +48,8 @@ const UserLogin = () => {
 			});
 		}
 	};
+
+	console.log(user);
 
 	return (
 		<div className='login'>
@@ -74,9 +78,9 @@ const UserLogin = () => {
 				/>
 
 				<button
-					className='lButton'
 					disabled={loading}
-					onClick={loginBtn}
+					onClick={loginHandler}
+					className='lButton'
 				>
 					Login
 				</button>

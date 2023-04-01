@@ -1,5 +1,7 @@
 import { createContext, useReducer } from "react";
-
+/*
+SearchContext to maange hotel search
+*/
 const INITIAL_STATE = {
   city: undefined,
   date: [],

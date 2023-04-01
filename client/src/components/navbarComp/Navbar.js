@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { AuthsContext } from '../../contextApi/AuthsContext';
+import { AuthContext } from '../../context/AuthContext';
 import './navbar.css';
 
 const Navbar = () => {
-	// From AuthsContext
-	const { user } = useContext(AuthsContext);
+	// From AuthContext
+	const { user } = useContext(AuthContext);
 
 	return (
 		<div className='navbar'>

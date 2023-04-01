@@ -13,8 +13,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import { AuthsContext } from '../../contextApi/AuthsContext';
-import { SearchContext } from '../../contextApi/SearchContext';
+import { AuthContext } from '../../context/AuthContext';
+import { SearchContext } from '../../context/SearchContext';
 import './header.css';
 
 //
@@ -44,7 +44,7 @@ const Header = ({ type }) => {
 	const navigate = useNavigate();
 
 	// From AuthConetxt, for login btn
-	const { user } = useContext(AuthsContext);
+	const { user } = useContext(AuthContext);
 
 	//
 	const handleOption = (name, operation) => {

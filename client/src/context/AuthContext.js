@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
 import { createContext, useReducer } from 'react';
-
-//
+/*
+AuthContext to manage user authentication
+*/
 const INITIAL_STATE = {
 	user: JSON.parse(localStorage.getItem('user')) || null,
 	loading: false,
 	error: null,
 };
 
-export const AuthsContext = createContext(INITIAL_STATE);
+export const AuthContext = createContext(INITIAL_STATE);
 
 // Create reducer
-const AuthsReducer = (state, action) => {
+const AuthReducer = (state, action) => {
 	switch (action.type) {
 		case 'LOGIN_START':
 			return {
@@ -43,13 +44,13 @@ const AuthsReducer = (state, action) => {
 };
 
 // Use the reducer in the context, use this to wrap entire app in index.js
-export const AuthsContextProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(
-		AuthsReducer,
+		AuthReducer,
 		INITIAL_STATE
 	);
 
-	// Save user into local storage, avoid logout after refresh
+	// Save user to local storage, avoid logout on page refresh
 	useEffect(() => {
 		localStorage.setItem(
 			'user',
@@ -58,7 +59,7 @@ export const AuthsContextProvider = ({ children }) => {
 	}, [state.user]);
 
 	return (
-		<AuthsContext.Provider
+		<AuthContext.Provider
 			value={{
 				user: state.user,
 				loading: state.loading,
@@ -67,6 +68,6 @@ export const AuthsContextProvider = ({ children }) => {
 			}}
 		>
 			{children}
-		</AuthsContext.Provider>
+		</AuthContext.Provider>
 	);
 };

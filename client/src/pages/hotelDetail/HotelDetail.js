@@ -12,9 +12,9 @@ import NavbarComp from '../../components/navbarComp/Navbar';
 import HeaderComp from '../../components/headerComp/Header';
 import MailingComp from '../../components/mailingComp/MailingComp';
 import FooterComp from '../../components/footerComp/Footer';
-import useFilter from '../../customHuk/useFilter';
-import { AuthsContext } from '../../contextApi/AuthsContext';
-import { SearchContext } from '../../contextApi/SearchContext';
+import useFetch from '../../hooks/useFetch';
+import { AuthContext } from '../../context/AuthContext';
+import { SearchContext } from '../../context/SearchContext';
 import HotelReserve from '../../components/hotelReserve/HotelReserve';
 import './hotelDetail.css';
 
@@ -32,12 +32,12 @@ const HotelDetail = () => {
 	const [openModal, setOpenModal] = useState(false);
 
 	//
-	const { loading, data, error } = useFilter(
+	const { loading, data, error } = useFetch(
 		`/hotels/unit-hotel/${id}`
 	);
 
-	// Import user obj from Authscontext & useNavigate
-	const { user } = useContext(AuthsContext);
+	// Import user obj from AuthContext & useNavigate
+	const { user } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	// SearchContext.js, pass num of days from searchpage
@@ -80,7 +80,7 @@ const HotelDetail = () => {
 		setSliderIndex(newSliderIndex);
 	};
 
-	// Reserve btn, work with Authscontext condition
+	// Reserve btn, work with AuthContext condition
 	const handleClick = () => {
 		if (user) {
 			setOpenModal(true);

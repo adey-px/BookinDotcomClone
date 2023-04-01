@@ -1,5 +1,4 @@
 import React from 'react';
-
 import NavbarComp from '../../components/navbarComp/Navbar';
 import HeaderComp from '../../components/headerComp/Header';
 import FeaturedCity from '../../components/featuredCity/FeaturedCity';
@@ -9,6 +8,7 @@ import MailingList from '../../components/mailingComp/MailingComp';
 import FooterComp from '../../components/footerComp/Footer';
 import './homePage.css';
 
+//
 const HomePage = () => {
 	return (
 		<div>

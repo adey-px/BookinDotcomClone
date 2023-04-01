@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import { useLocation } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
-import useFilter from '../../customHuk/useFilter';
+import useFetch from '../../hooks/useFetch';
 
 import NavbarComp from '../../components/navbarComp/Navbar';
 import HeaderComp from '../../components/headerComp/Header';
@@ -28,7 +28,7 @@ const SearchPage = () => {
 	const [max, setMax] = useState(undefined);
 
 	// State var from useCount function hook. Prefix path taken from app.js/hotelRoute
-	const { loading, data, error, sortData } = useFilter(
+	const { loading, data, error, sortData } = useFetch(
 		`/hotels/get-hotels?city=${destination}&min=${
 			min || 0
 		}&max=${max || 999}`

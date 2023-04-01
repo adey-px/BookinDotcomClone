@@ -3,7 +3,6 @@ import {
 	Routes,
 	Route,
 } from 'react-router-dom';
-
 import HomePage from './pages/homePage/HomePage';
 import HotelDetail from './pages/hotelDetail/HotelDetail';
 import SearchList from './pages/searchPage/SearchPage';

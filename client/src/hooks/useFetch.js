@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// Function hook to load data for featured sections
-const useFilter = (url) => {
+// Custom hook to load data for featured sections
+const useFetch = (url) => {
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState([]);
 	const [error, setError] = useState(false);
@@ -24,7 +24,7 @@ const useFilter = (url) => {
 		[url] // Empty if auto not desired in reFetch
 	);
 
-	// Function called to search again in searchPage
+	// function to search again in searchPage
 	const sortData = async () => {
 		setLoading(true);
 		try {
@@ -38,4 +38,4 @@ const useFilter = (url) => {
 	return { loading, data, error, sortData };
 };
 
-export default useFilter;
+export default useFetch;
