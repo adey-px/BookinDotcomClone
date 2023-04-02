@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-
 import { AuthContext } from '../../context/AuthContext';
 import './navbar.css';
 
+//
 const Navbar = () => {
-	// From AuthContext
 	const { user } = useContext(AuthContext);
 
 	return (
@@ -15,10 +14,16 @@ const Navbar = () => {
 					<Link to='/'>FlywiseBooking</Link>
 				</span>
 
+				{/* if user is login */}
 				{user ? (
-					['Hello, ', user.username]
+					<div className='navLogin'>
+						<span>Welcome, {user.details.username}</span>
+						<Link to='/logout'>
+							<button className='navButton'>Logout</button>
+						</Link>
+					</div>
 				) : (
-					<div className='navItems'>
+					<div className='navLogout'>
 						<button className='navButton'>Register</button>
 						<Link to='/login'>
 							<button className='navButton'>Login</button>

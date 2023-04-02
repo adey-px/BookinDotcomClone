@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
 import authRoute from "./routes/authRoute.js";
 import hotelRoute from "./routes/hotelRoute.js";
 import roomRoute from "./routes/roomRoute.js";
@@ -37,7 +36,7 @@ app.use(cookieParser());
 // API for tesing paths with json in insomnia
 app.use(express.json());
 
-// Middleware prefixes for paths in route files
+// Middleware endpoints for paths in route files
 app.use("/auths", authRoute);
 app.use("/hotels", hotelRoute);
 app.use("/rooms", roomRoute);

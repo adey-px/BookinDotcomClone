@@ -12,19 +12,19 @@ const UserLogin = () => {
 	});
 
 	/* from AuthContext, also used in navbar login */
-	const { user, loading, error, dispatch } =
+	const { loading, error, dispatch } =
 		useContext(AuthContext);
 
-	/* input handler */
+	/* to redirect, if login succeeds */
+	const navigate = useNavigate();
+
+	/* form input handler */
 	const inputHandler = (e) => {
 		setCredentials((prev) => ({
 			...prev,
 			[e.target.id]: e.target.value,
 		}));
 	};
-
-	// to redirect, if login succeeds
-	const navigate = useNavigate();
 
 	// login handler
 	const loginHandler = async (e) => {
@@ -39,8 +39,9 @@ const UserLogin = () => {
 				type: 'LOGIN_SUCCESS',
 				payload: res.data,
 			});
-
 			navigate('/');
+
+			/* */
 		} catch (err) {
 			dispatch({
 				type: 'LOGIN_FAILURE',
@@ -48,8 +49,6 @@ const UserLogin = () => {
 			});
 		}
 	};
-
-	console.log(user);
 
 	return (
 		<div className='login'>

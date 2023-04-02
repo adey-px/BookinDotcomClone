@@ -7,7 +7,6 @@ import {
 	faCircleXmark,
 	faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
-
 import NavbarComp from '../../components/navbarComp/Navbar';
 import HeaderComp from '../../components/headerComp/Header';
 import MailingComp from '../../components/mailingComp/MailingComp';
@@ -18,8 +17,8 @@ import { SearchContext } from '../../context/SearchContext';
 import HotelReserve from '../../components/hotelReserve/HotelReserve';
 import './hotelDetail.css';
 
+//
 const HotelDetail = () => {
-	//
 	// State hook linked to Check btn in searchList pg
 	const location = useLocation();
 	const id = location.pathname.split('/')[3]; //Path from index & hotelRoute

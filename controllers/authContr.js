@@ -42,7 +42,7 @@ export const login = async (req, res, next) => {
 			);
 
 		// verify identity, hide selected user details in jwt, sent into cookie
-		const userToken = jwt.sign(
+		const token = jwt.sign(
 			{ id: user._id, isAdmin: user.isAdmin },
 			process.env.JWT
 		);
@@ -53,7 +53,7 @@ export const login = async (req, res, next) => {
 
 		// Set cookie for checking user role and permission
 		res
-			.cookie('access_token', userToken, { httpOnly: true })
+			.cookie('access_token', token, { httpOnly: true })
 			.status(200)
 			.json({ details: { ...otherDetails }, isAdmin });
 	} catch (err) {

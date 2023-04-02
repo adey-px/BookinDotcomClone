@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { DateRange } from 'react-date-range';
 import { format } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faBed,
@@ -122,10 +122,13 @@ const Header = ({ type }) => {
 							FlywiseBooking account
 						</p>
 
+						{/* hide for login user */}
 						{!user && (
-							<button className='loginBtn'>
-								Sign in / Register
-							</button>
+							<Link to='/login'>
+								<button className='loginBtn'>
+									Sign in / Register
+								</button>
+							</Link>
 						)}
 
 						{/* Destination search bar on left side of header container */}

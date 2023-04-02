@@ -1,23 +1,24 @@
 import jwt from 'jsonwebtoken';
 import { raiseError } from './raiseError.js';
 /*
-Check access_token from cookies set in user login 
+Check access_token from cookies set in user login.
+Verify all access & authentication
 */
 
 export const verifyToken = (req, res, next) => {
 	/* user token in cookie from login */
-	const loginToken = req.cookies.access_token;
+	const token = req.cookies.access_token;
 
 	/* if no token from login, throw error */
-	if (!loginToken) {
+	if (!token) {
 		return next(
 			raiseError(401, 'You are not authenticated!')
 		);
 	}
 
-	/* if token, check for error, load user detail */
+	/* if token, check it, load user detail from authContr.js */
 	jwt.verify(
-		loginToken,
+		token,
 		process.env.JWT,
 		(err, userInfo) => {
 			/* if error on token */
