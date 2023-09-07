@@ -58,5 +58,5 @@ app.use((err, req, res, next) => {
 // Connect app to node server with call to db
 app.listen(4000, () => {
   connect();
-  console.log("Development server is running...");
+  console.log("Started Dev server at http://localhost:4000");
 });

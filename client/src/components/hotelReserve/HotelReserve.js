@@ -13,9 +13,7 @@ const HotelReserve = ({ setOpen, hotelId }) => {
 	const [selectRoom, setSelectRoom] = useState([]);
 
 	// Fetch room data from hotelRoute, prefix get from hotelDetail pg
-	const { loading, data, error } = useFetch(
-		`rooms/${hotelId}`
-	);
+	const { data } = useFetch(`rooms/${hotelId}`);
 
 	// Bring date in hotelDetail pg to get dateRange
 	const { date } = useContext(SearchContext);
